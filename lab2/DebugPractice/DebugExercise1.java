@@ -10,7 +10,7 @@ public class DebugExercise1 {
     }
 
     public static void main(String[] args) {
-        int t = 10;
+        int t = 11;
         int b = 2;
         int result = divideThenRound(t, b);
         System.out.println("round(" + t + "/" + b + ")=" + result);

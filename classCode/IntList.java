@@ -26,6 +26,20 @@ public class IntList {
 		return totalSize;
 	}
 
+	/** Returns the first item of this IntList*/
+	public void addFirst(int x) {
+		IntList curr = this;
+		int temp = x;
+		while (curr.rest != null) {
+			int helper = curr.first;
+			curr.first = temp;
+			temp = helper;
+			curr = curr.rest;
+		}
+		int helper = curr.first;
+		curr.first = temp;
+		curr.rest = new IntList(helper, null);
+	}
 	/** Returns the ith item of this IntList. */
 	public int get(int i) {
 		if (i == 0) {
@@ -53,9 +67,9 @@ public class IntList {
 	public static void main(String[] args) {
 		IntList L = new IntList(15, null);
 		L = new IntList(10, L);
-		L = new IntList(5, L);
-
-		L = dincrList(L, 1);
+		//L = new IntList(5, L);
+		L.addFirst(5);
+		//L = dincrList(L, 1);
 		System.out.println(L.get(0));
 		System.out.println(L.get(1));
 		System.out.println(L.get(2));
