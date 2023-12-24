@@ -72,12 +72,13 @@ public class IntListTest {
 
     @Test (timeout = 1000)
     public void testReverse() {
-        IntList A = IntList.of(1, 2, 3);
-        IntList B = IntList.of(3, 2, 1);
+        IntList A = IntList.of(1, 2, 3, 4);
+        IntList B = IntList.of(4, 3, 2, 1);
         IntList C = IntList.of();
-        IntList reversedA = IntList.reverse(A);
-        assertEquals(reversedA, B); // check for reversal
-        assertNotEquals(A, reversedA); // check for non-destructive property
+        IntList copiedA = IntList.of(1, 2, 3, 4);
+        A = IntList.reverse(A);
+        assertEquals(A, B); // check for reversal
+        assertNotEquals(A, copiedA); // check for non-destructive property
         assertNull(IntList.reverse(C)); // check for null input
     }
 }

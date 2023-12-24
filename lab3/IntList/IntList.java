@@ -44,7 +44,8 @@ public class IntList {
             current = current.rest;
             reversedA = new IntList(current.first, reversedA);
         }
-        return reversedA;
+        A = reversedA;
+        return A;
     }
     /**
      * Returns a list equal to L with all elements squared. Destructive.
