@@ -64,14 +64,52 @@ public class IntList {
 		dincrList(L.rest, x);
 		return L;
 	}
+
+	public void skippify() {
+		IntList p = this;
+		int n = 1;
+		while (p != null) {
+			IntList next = p;
+			for (int i = 0; i < n; i ++) {
+				if (next.rest == null) {
+					break;
+				}
+				next = next.rest;
+			}
+			p.rest = next.rest;
+			p = p.rest;
+			n ++;
+		}
+	}
+
+	public static void removeDuplicates(IntList p) {
+		if (p == null) {
+			return;
+		}
+		IntList current = p.rest;
+		IntList previous = p;
+		while (current != null) {
+			if (current.first != previous.first) {
+				previous = current;
+			}
+			else {
+				previous.rest = current.rest;
+				// omit the redundant node
+			}
+			current = current.rest;
+		}
+	}
 	public static void main(String[] args) {
-		IntList L = new IntList(15, null);
-		L = new IntList(10, L);
-		//L = new IntList(5, L);
-		L.addFirst(5);
-		//L = dincrList(L, 1);
-		System.out.println(L.get(0));
-		System.out.println(L.get(1));
-		System.out.println(L.get(2));
+		IntList L = new IntList(1, null);
+		for (int i = 2; i < 10; i ++) {
+			L.addFirst(i);
+		}
+		L.skippify();
+		IntList p = L;
+		while (p != null) {
+			System.out.print(p.first+ " ");
+			p = p.rest;
+		}
+		System.out.println();
 	}
 } 
