@@ -76,8 +76,7 @@ public class IntListTest {
         IntList B = IntList.of(4, 3, 2, 1);
         IntList C = IntList.of();
         IntList copiedA = IntList.of(1, 2, 3, 4);
-        A = IntList.reverse(A);
-        assertEquals(A, B); // check for reversal
+        assertEquals(IntList.reverse(A), B); // check for reversal
         assertNotEquals(A, copiedA); // check for non-destructive property
         assertNull(IntList.reverse(C)); // check for null input
     }

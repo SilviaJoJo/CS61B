@@ -35,17 +35,19 @@ public class IntList {
 
     /** Reverses a list.*/
     public static IntList reverse(IntList A) {
-        if (A == null) {
+        if (A == null || A.rest == null) {
             return null;
         }
-        IntList reversedA = new IntList(A.first, null);
-        IntList current = A;
-        while (current.rest != null) {
-            current = current.rest;
-            reversedA = new IntList(current.first, reversedA);
+        IntList curr1 = A;
+        IntList curr2 = A.rest;
+        curr1.rest = null;
+        while (curr2 != null) {
+            IntList temp = curr2.rest;
+            curr2.rest = curr1;
+            curr1 = curr2;
+            curr2 = temp;
         }
-        A = reversedA;
-        return A;
+        return curr1;
     }
     /**
      * Returns a list equal to L with all elements squared. Destructive.
