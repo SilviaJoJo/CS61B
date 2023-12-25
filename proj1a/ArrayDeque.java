@@ -17,7 +17,7 @@ public class ArrayDeque<T> {
     }
     private int plusOne(int index) {
         if (index < items.length - 1) {
-            return index - 1;
+            return index + 1;
         }
         return 0;
     }
