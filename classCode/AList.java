@@ -57,24 +57,6 @@ public class AList <Item> {
         return deleted;
     }
 
-    public static int[] insert(int[] arr, int item, int position) {
-        int[] newArr = new int[arr.length + 1];
-        if (position == 0) {
-            newArr[0] = item;
-            System.arraycopy(arr, 0, newArr, 1, arr.length);
-        }
-        else if (position >= arr.length) {
-            System.arraycopy(arr, 0, newArr, 0, arr.length);
-            newArr[arr.length] = item;
-        }
-        else {
-            System.arraycopy(arr, 0, newArr, 0, position - 1);
-            newArr[position] = item;
-            System.arraycopy(arr, position, newArr, position + 1, arr.length - position);
-        }
-        return newArr;
-    }
-
     public static void main(String[] args) {
         int[] input = {5, 9, 14, 15};
         int[] result = AList.insert(input, 6, 2);
