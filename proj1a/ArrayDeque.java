@@ -61,7 +61,7 @@ public class ArrayDeque<T> {
     public void printDeque() {
         int index = nextFirst;
         for (int i = 0; i < size; i++) {
-            System.out.print(items[index].toString() + " ");
+            System.out.print(get(i).toString() + " ");
             index = plusOne(index);
         }
     };
@@ -74,7 +74,7 @@ public class ArrayDeque<T> {
         items[plusOne(nextFirst)] = null;
         size--;
         nextFirst = plusOne(nextFirst);
-        if (items.length >= 16 && size / items.length < 0.25) {
+        if (items.length >= 16 && ((double) size / items.length) < 0.25) {
             resize(items.length / 2);
         }
         return ans;
@@ -87,7 +87,7 @@ public class ArrayDeque<T> {
         items[minusOne(nextLast)] = null;
         size--;
         nextLast = minusOne(nextLast);
-        if (items.length >= 16 && size / items.length < 0.25) {
+        if (items.length >= 16 && ((double) size / items.length) < 0.25) {
             resize(items.length / 2);
         }
         return ans;
