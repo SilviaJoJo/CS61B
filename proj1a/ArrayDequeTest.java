@@ -41,9 +41,6 @@ public class ArrayDequeTest {
         for (int i = -16; i < 0; i++) {
             dq.addFirst(i);
         }
-        for (int i = -1; i >= 16; i--) {
-            assertTrue(i == dq.get(i));
-        }
         for (int i = 0; i < 30; i++) {
             dq.removeFirst();
         }

@@ -6,9 +6,9 @@ public class ArrayDeque<T> {
     public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
-        nextFirst = 0;
-        nextLast = 1;
-    };
+        nextFirst = 4;
+        nextLast = 5;
+    }
     private int minusOne(int index) {
         if (index > 0) {
             return index - 1;
@@ -28,77 +28,70 @@ public class ArrayDeque<T> {
             newArray[i + start] = get(i);
         }
         nextFirst = minusOne(start);
-        for (int i = 0; i < size; i++) {
-            nextLast = plusOne(nextLast);
-        }
+        nextLast = nextFirst + size + 1;
         items = newArray;
     }
     public void addFirst(T item) {
-        if (size == items.length) {
-            resize(2 * size);
+        if (size == items.length - 1) {
+            resize(2 * items.length);
         }
         items[nextFirst] = item;
         nextFirst = minusOne(nextFirst);
         size++;
-    };
+    }
     public void addLast(T item) {
-        if (size == items.length) {
-            resize(2 * size);
+        if (size == items.length - 1) {
+            resize(2 * items.length);
         }
         items[nextLast] = item;
         nextLast = plusOne(nextLast);
         size++;
-    };
+    }
     public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        }
-        return false;
-    };
+        return size == 0;
+    }
     public int size() {
         return size;
-    };
+    }
     public void printDeque() {
-        int index = nextFirst;
         for (int i = 0; i < size; i++) {
             System.out.print(get(i).toString() + " ");
-            index = plusOne(index);
         }
-    };
+    }
 
     public T removeFirst() {
-        if (size == 0) {
+        if (isEmpty()) {
             return null;
         }
         T ans = items[plusOne(nextFirst)];
         items[plusOne(nextFirst)] = null;
         size--;
         nextFirst = plusOne(nextFirst);
-        if (items.length >= 16 && ((double) size / items.length) < 0.25) {
+        if (items.length >= 16 && items.length / size >= 4) {
             resize(items.length / 2);
         }
         return ans;
-    };
+    }
     public T removeLast() {
-        if (size == 0) {
+        if (isEmpty()) {
             return null;
         }
         T ans = items[minusOne(nextLast)];
         items[minusOne(nextLast)] = null;
         size--;
         nextLast = minusOne(nextLast);
-        if (items.length >= 16 && ((double) size / items.length) < 0.25) {
+        if (items.length >= 16 && items.length / size >= 4) {
             resize(items.length / 2);
         }
         return ans;
-    };
+    }
     public T get(int index) {
-        if (index < 0) {
+        if (index < 0 || index > size) {
             return null;
         } else if (nextFirst + index + 1 < items.length) {
             return items[nextFirst + index + 1];
         } else {
             return items[nextFirst + index + 1 - items.length];
         }
-    };
+    }
 }
