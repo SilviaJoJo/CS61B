@@ -23,12 +23,14 @@ public class ArrayDeque<T> {
     }
     private void resize(int capacity) {
         T[] newArray = (T[]) new Object[capacity];
-        int start = size / 2;
+        int start = capacity / 4;
         for (int i = 0; i < size; i++) {
             newArray[i + start] = get(i);
         }
-        nextFirst = start - 1;
-        nextLast = start + size;
+        nextFirst = minusOne(start);
+        for (int i = 0; i < size; i++) {
+            nextLast = plusOne(nextLast);
+        }
         items = newArray;
     }
     public void addFirst(T item) {
