@@ -25,7 +25,7 @@ public class ArrayDeque<T> {
         T[] newArray = (T[]) new Object[capacity];
         int start = size / 2;
         for (int i = 0; i < size; i++) {
-            newArray[i + start] = items[i];
+            newArray[i + start] = get(i);
         }
         nextFirst = start - 1;
         nextLast = start + size;
@@ -65,6 +65,9 @@ public class ArrayDeque<T> {
     };
 
     public T removeFirst() {
+        if (size == 0) {
+            return null;
+        }
         T ans = items[plusOne(nextFirst)];
         items[plusOne(nextFirst)] = null;
         size--;
@@ -75,6 +78,9 @@ public class ArrayDeque<T> {
         return ans;
     };
     public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
         T ans = items[minusOne(nextLast)];
         items[minusOne(nextLast)] = null;
         size--;
