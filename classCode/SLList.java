@@ -1,85 +1,50 @@
-import java.util.function.IntToDoubleFunction;
-
-/** An SLList is a list of integers, which hides the terrible truth
+ /** An SLList is a list of integers, which hides the terrible truth
    * of the nakedness within. */
-public class SLList {	
-	private static class IntNode {
-		public int item;
-		public IntNode next;
+public class SLList<LochNess> {	
+	private class StuffNode {
+		public LochNess item;
+		public StuffNode next;
 
-		public IntNode(int i, IntNode n) {
+		public StuffNode(LochNess i, StuffNode n) {
 			item = i;
 			next = n;
 		}
 	} 
 
-	private IntNode first;
+	private StuffNode first;
+	private int size;
+
+	public SLList(LochNess x) {
+		first = new StuffNode(x, null);
+		size = 1;
+	}
 
  	/** Adds x to the front of the list. */
- 	public void addFirst(int x) {
- 		first = new IntNode(x, first);
+ 	public void addFirst(LochNess x) {
+ 		first = new StuffNode(x, first);
+ 		size += 1;
  	}
 
-	public void insert(int item, int position) {
-		if (position == 0 || first == null) {
-			addFirst(item);
-			return;
-			// bug1: forget to return for the corner case; otherwise compilation error
-		}
-		IntNode current = first;
-		while (current.next != null && position > 1) {
-			// bug2: and or; otherwise always inserted to the end
-			current = current.next;
-			position -= 1;
-		}
-		current.next = new IntNode(item, current.next);
-	}
+ 	/** Returns the first item in the list. */
+ 	public LochNess getFirst() {
+ 		return first.item; 		
+ 	}
 
-	public void reverseIterative() {
-		 if (first == null || first.next == null) {
-			 return;
-		 }
-		 IntNode curr1 = first;
-		 IntNode curr2 = first.next;
-		 curr1.next = null;
-		 while (curr2 != null) {
-			 IntNode temp = curr2.next;
-			 curr2.next = curr1;
-			 curr1 = curr2;
-			 curr2 = temp;
-		 }
-		 first = curr1;
-	}
+ 	/** Adds an item to the end of the list. */
+ 	public void addLast(LochNess x) {
+ 		size += 1;
 
-	private IntNode reverseHelper(IntNode node) {
-		 if (node == null || node.next == null) {
-			 first = node;
-			 return node;
-		 }
-		 IntNode last = reverseHelper(node.next);
-		 last.next = node;
-		 node.next = null;
-		 return node;
-	}
-	public void reverseRecursive() {
-		 IntNode end = reverseHelper(first);
-	}
+ 		StuffNode p = first;
 
-	//OMG I don't know why if I use "Run", the result is wrong
-	//But if I use the terminal to compile and run, the result is correct
-	public static void main(String[] args) {
- 		/* Creates a list of one integer, namely 10 */
- 		SLList L = new SLList();
-		 L.addFirst(2);
-		 L.addFirst(6);
-		 L.addFirst(5);
-		 L.insert(10, 1);
-		 //L.reverseIterative();
-		L.reverseRecursive();
-		 SLList.IntNode current = L.first;
-		 while (current != null) {
-			 System.out.print(current.item + " ");
-			 current = current.next;
-		 }
+ 		/* Move p until it reaches the end of the list. */
+ 		while (p.next != null) {
+ 			p = p.next;
+ 		}
+
+ 		p.next = new StuffNode(x, null);
+ 	}
+
+ 	public int size() {
+ 		return size;
  	}
 }
