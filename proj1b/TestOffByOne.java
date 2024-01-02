@@ -9,12 +9,13 @@ public class TestOffByOne {
     // Your tests go here.
     @Test
     public void testEqualChars() {
-        assertTrue(offByOne.equalChars('a', 'b'));
-        assertTrue(offByOne.equalChars('r', 'q'));
-        assertTrue(offByOne.equalChars('&', '%'));
-        assertFalse(offByOne.equalChars('a', 'e'));
-        assertFalse(offByOne.equalChars('z', 'a'));
-        assertFalse(offByOne.equalChars('a', 'a'));
-        assertFalse(offByOne.equalChars('a', 'A'));
+        assertTrue(offByOne.equalChars('a', 'b')); // regular 1
+        assertTrue(offByOne.equalChars('r', 'q')); // regular 2
+        assertTrue(offByOne.equalChars('&', '%')); // non-alphabetical
+        assertTrue(offByOne.equalChars('A', 'B')); // capital letter
+        assertFalse(offByOne.equalChars('a', 'e')); // regular 1
+        assertFalse(offByOne.equalChars('z', 'a')); // regular 2
+        assertFalse(offByOne.equalChars('a', 'a')); // equal
+        assertFalse(offByOne.equalChars('a', 'B')); // lower and upper case
     }
 }
