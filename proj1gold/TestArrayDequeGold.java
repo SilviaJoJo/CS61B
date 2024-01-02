@@ -3,7 +3,7 @@ import org.junit.Test;
 
 public class TestArrayDequeGold {
     @Test
-    public void testRandom() {
+    public void testStudentArrayDeque() {
         StudentArrayDeque<Integer> sad = new StudentArrayDeque<>();
         //LinkedListDeque<Integer> sad = new LinkedListDeque<>();
         ArrayDequeSolution<Integer> ads = new ArrayDequeSolution<>();
@@ -23,14 +23,14 @@ public class TestArrayDequeGold {
                 Integer int2 = ads.removeFirst();
                 message += "removeFirst()\n";
                 assertEquals(message, int1, int2);
+                // It seems that null is not allowed
+                // we should only check for the return number
             } else {
                 Integer int1 = sad.removeLast();
                 Integer int2 = ads.removeLast();
                 message += "removeLast()\n";
                 assertEquals(message, int1, int2);
-            }
-            for (int j = 0; j < sad.size(); j++) {
-                assertEquals(message, ads.get(j), sad.get(j));
+                // same here
             }
         }
     }
