@@ -58,8 +58,7 @@ public class AList <Item> {
     }
 
     public static void main(String[] args) {
-        int[] input = {5, 9, 14, 15};
-        int[] result = AList.insert(input, 6, 2);
+        int[] result = {5, 9, 14, 15};
         for (int i = 0; i < result.length; i ++) {
             System.out.print(result[i] + " ");
         }
