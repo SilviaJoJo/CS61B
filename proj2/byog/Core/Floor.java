@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 public abstract class Floor {
-    public Position position; //the left lower corner coordinate
+    protected Position position; //the left lower corner coordinate
     // size of this Floor object
     protected int width;
     protected int height;
@@ -13,6 +13,21 @@ public abstract class Floor {
     protected int SEED;
     protected static Random RANDOM;
     protected HashSet<Position> positions;
+    public Floor(Position position, int w, int h, int seed) {
+        this.position = position;
+        WIDTH = w;
+        HEIGHT = h;
+        SEED = seed;
+        RANDOM = new Random(SEED);
+        randomSize();
+        positions = new HashSet<>();
+        for (int i = position.x; i < position.x + width; i++) {
+            for (int j = position.y; j < position.y + height; j++) {
+                positions.add(new Position(i, j));
+            }
+        }
+    }
+    
     public int getWidth() {
         return width;
     }

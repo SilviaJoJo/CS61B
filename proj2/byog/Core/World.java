@@ -5,14 +5,14 @@ import byog.TileEngine.Tileset;
 import java.util.Random;
 import java.util.HashSet;
 public class World {
-    public HashSet<Position> floors;
-    public HashSet<Position> walls;
+    private HashSet<Position> floors;
+    private HashSet<Position> walls;
     private int WIDTH;
     private int HEIGHT;
     private static int SEED;
     private static Random RANDOM;
 
-    public World (int seed) {
+    public World(int seed) {
         floors = new HashSet<>();
         walls = new HashSet<>();
         WIDTH = 50;
@@ -60,9 +60,9 @@ public class World {
                 int nextY = 1 + RANDOM.nextInt(HEIGHT - 3);
                 int shape = RANDOM.nextInt(4);
                 if (shape == 1) {
-                    structure = new Room(new Position(nextX, nextY), WIDTH, HEIGHT, SEED + i);
+                    structure = new Room(new Position(nextX, nextY), WIDTH, HEIGHT, SEED);
                 } else {
-                    structure = new Hallway(new Position(nextX, nextY), WIDTH, HEIGHT, SEED + i);
+                    structure = new Hallway(new Position(nextX, nextY), WIDTH, HEIGHT, SEED);
                 }
                 if (isOverlapped(floors, structure.positions())) {
                     break;
@@ -83,7 +83,7 @@ public class World {
         }
         boolean locked = false;
         for (Position position : walls) {
-            if (position.x == WIDTH / 2 && locked == false) {
+            if (position.x == WIDTH / 2 && !locked) {
                 tiles[position.x][position.y] = Tileset.LOCKED_DOOR;
                 locked = true;
             } else {
