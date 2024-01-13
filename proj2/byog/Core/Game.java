@@ -35,7 +35,7 @@ public class Game {
         TETile[][] finalWorldFrame = new TETile[WIDTH][HEIGHT];
         int seed = Integer.parseInt(input.substring(1, input.length() - 1));
         World world = new World(seed);
-        world.visualizeWorld(finalWorldFrame);
+        finalWorldFrame = world.visualizeWorld(finalWorldFrame);
         ter.renderFrame(finalWorldFrame);
         return finalWorldFrame;
     }

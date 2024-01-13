@@ -60,9 +60,9 @@ public class World {
                 int nextY = 1 + RANDOM.nextInt(HEIGHT - 3);
                 int shape = RANDOM.nextInt(4);
                 if (shape == 1) {
-                    structure = new Room(new Position(nextX, nextY), WIDTH, HEIGHT, SEED);
+                    structure = new Room(new Position(nextX, nextY), WIDTH, HEIGHT, SEED + i);
                 } else {
-                    structure = new Hallway(new Position(nextX, nextY), WIDTH, HEIGHT, SEED);
+                    structure = new Hallway(new Position(nextX, nextY), WIDTH, HEIGHT, SEED + i);
                 }
                 if (isOverlapped(floors, structure.positions())) {
                     break;
@@ -72,7 +72,7 @@ public class World {
         removeDuplicates(walls, floors);
     }
 
-    public void visualizeWorld(TETile[][] tiles) {
+    public TETile[][] visualizeWorld(TETile[][] tiles) {
         fillWithNothingTiles(tiles);
         WIDTH = tiles.length;
         HEIGHT = tiles[0].length;
@@ -90,6 +90,6 @@ public class World {
                 tiles[position.x][position.y] = Tileset.WALL;
             }
         }
-
+        return tiles;
     }
 }
