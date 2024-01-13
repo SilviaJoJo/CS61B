@@ -3,6 +3,8 @@ package byog.Core;
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 
+import java.lang.reflect.Field;
+
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
@@ -31,8 +33,18 @@ public class Game {
         // TODO: Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
-
-        TETile[][] finalWorldFrame = null;
+        // I assume that all passed in input are valid NxxxS form
+        ter.initialize(WIDTH, HEIGHT);
+        TETile[][] finalWorldFrame = new TETile[WIDTH][HEIGHT];
+        int seed = Integer.parseInt(input.substring(1, input.length() - 1));
+        World world = new World(seed);
+        world.visualizeWorld(finalWorldFrame);
+        ter.renderFrame(finalWorldFrame);
         return finalWorldFrame;
+    }
+
+    public static void main(String[] args) {
+        Game game = new Game();
+        game.playWithInputString("N12834S");
     }
 }
