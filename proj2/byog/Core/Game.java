@@ -39,9 +39,4 @@ public class Game {
         ter.renderFrame(finalWorldFrame);
         return finalWorldFrame;
     }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.playWithInputString("N1284S");
-    }
 }
