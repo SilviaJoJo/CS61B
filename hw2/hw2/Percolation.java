@@ -2,17 +2,19 @@ package hw2;
 import static org.junit.Assert.*;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
+import java.awt.*;
+
 public class Percolation {
-    // create N-by-N grid, with all sites initially blocked
-    private int[][] items;
     private int N;
+    private int[][] items;
     private int openSites;
     private WeightedQuickUnionUF uf;
-    private int topNode;
-    private int bottomNode;
+    private int topSite;
+    private int bottomSite;
 
+    // create N-by-N grid, with all sites initially blocked
     private int getIndex(int row, int col) {
-        return row * items.length + col;
+        return row * N + col;
     }
 
     public Percolation(int N) {
@@ -30,13 +32,8 @@ public class Percolation {
         }
         // connect topNode and bottomNode
         uf = new WeightedQuickUnionUF(N * N + 2); // according to the spoilers
-        topNode = N * N;
-        bottomNode = N * N + 1;
-        for (int i = 0; i < N; i++) {
-            uf.union(i, topNode);
-            uf.union(N * (N - 1) + i, bottomNode);
-        }
-        openSites = 0;
+        topSite = N * N;
+        bottomSite = N * N + 1;
     }
     private void argumentCheck(int row, int col) {
         if (row < 0 || row >= N || col < 0 || col >= N) {
@@ -62,6 +59,11 @@ public class Percolation {
             if (col < N - 1 && isOpen(row, col + 1)) {
                 uf.union(getIndex(row, col), getIndex(row, col + 1));
             }
+            if (row == 0) {
+                uf.union(getIndex(row, col), topSite);
+            } else if (row == N - 1) {
+                uf.union(getIndex(row, col), bottomSite);
+            }
         }
     }
     // is the site (row, col) open?
@@ -72,7 +74,7 @@ public class Percolation {
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
         argumentCheck(row, col);
-        return uf.connected(getIndex(row, col), topNode);
+        return uf.connected(getIndex(row, col), topSite);
     }
     // number of open sites
     public int numberOfOpenSites() {
@@ -80,25 +82,25 @@ public class Percolation {
     }
     // does the system percolate?
     public boolean percolates() {
-        return uf.connected(topNode, bottomNode);
+        return uf.connected(topSite, bottomSite);
     }
     // use for unit testing (not required)
     public static void main(String[] args) {
         Percolation percolation = new Percolation(5);
-        assertFalse(percolation.percolates());
-        percolation.open(0, 0);
-        percolation.open(1, 1);
-        percolation.open(0, 1);
-        assertFalse(percolation.isOpen(1, 0));
         percolation.open(3, 4);
         percolation.open(2, 4);
         percolation.open(2, 2);
-        percolation.open(2, 2);
         percolation.open(2, 3);
-        percolation.open(0, 2);
+//      percolation.open(0, 2);
         percolation.open(1, 2);
-        assertTrue(percolation.isFull(2, 2));
+        assertFalse(percolation.percolates());
         percolation.open(4, 4);
-        assertTrue(percolation.percolates());
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                System.out.print(percolation.items[i][j] + " ");
+                assertFalse(percolation.isFull(i, j));
+            }
+            System.out.println();
+        }
     }
 }

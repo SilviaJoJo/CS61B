@@ -33,7 +33,6 @@ public class InteractivePercolationVisualizer {
         PercolationVisualizer.draw(perc, N);
         StdDraw.show(DELAY);
         while (true) {
-
             // detected mouse click
             if (StdDraw.mousePressed()) {
 

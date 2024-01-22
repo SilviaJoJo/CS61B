@@ -17,12 +17,11 @@ public class PercolationStats {
         this.T = T;
         for (int i = 0; i < T; i++) {
             Percolation per = pf.make(N);
-            int trials = 0;
+//          int trials = 0; -- this approach is wrong, because some are repetitive
             while (!per.percolates()) {
                 per.open(StdRandom.uniform(N), StdRandom.uniform(N));
-                trials++;
             }
-            thresholds[i] = (double) trials / (N * N);
+            thresholds[i] = (double) per.numberOfOpenSites() / (N * N);
         }
     }
     // sample mean of percolation threshold
