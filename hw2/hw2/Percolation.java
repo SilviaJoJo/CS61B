@@ -1,8 +1,6 @@
 package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
-import java.awt.*;
-
 public class Percolation {
     private int N;
     private int[][] items;
