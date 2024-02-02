@@ -1,24 +1,31 @@
 package hw3.hash;
 
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
+import static org.junit.Assert.*;
+
 
 public class TestSimpleOomage {
 
     @Test
     public void testHashCodeDeterministic() {
-        SimpleOomage so = SimpleOomage.randomSimpleOomage();
-        int hashCode = so.hashCode();
-        for (int i = 0; i < 100; i += 1) {
-            assertEquals(hashCode, so.hashCode());
+        List<SimpleOomage> l = new ArrayList<>();
+        for (int i = 0; i < 256; i += 5) {
+            for (int j = 0; j < 256; j += 5) {
+                for (int k = 0; k < 256; k += 5) {
+                    l.add(new SimpleOomage(i, j, k));
+                }
+            }
+        }
+        List<Integer> s = new ArrayList<>();
+        for (SimpleOomage so : l) {
+            assertFalse(s.contains(so.hashCode()));
+            s.add(so.hashCode());
         }
     }
 
