@@ -14,6 +14,15 @@ public class TestSimpleOomage {
 
     @Test
     public void testHashCodeDeterministic() {
+        SimpleOomage so = SimpleOomage.randomSimpleOomage();
+        int hashCode = so.hashCode();
+        for (int i = 0; i < 100; i += 1) {
+            assertEquals(hashCode, so.hashCode());
+        }
+    }
+
+    @Test
+    public void testHashCodePerfect() {
         List<SimpleOomage> l = new ArrayList<>();
         for (int i = 0; i < 256; i += 5) {
             for (int j = 0; j < 256; j += 5) {
@@ -27,16 +36,6 @@ public class TestSimpleOomage {
             assertFalse(s.contains(so.hashCode()));
             s.add(so.hashCode());
         }
-    }
-
-    @Test
-    public void testHashCodePerfect() {
-        SimpleOomage so1 = new SimpleOomage(5, 10, 15);
-        SimpleOomage so2 = new SimpleOomage(10, 15, 5);
-        assertNotEquals(so1.hashCode(), so2.hashCode());
-        SimpleOomage so3 = new SimpleOomage(0, 10, 0);
-        SimpleOomage so4 = new SimpleOomage(5, 0, 5);
-        assertNotEquals(so3.hashCode(), so4.hashCode());
     }
 
     @Test
