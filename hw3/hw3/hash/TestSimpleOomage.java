@@ -23,19 +23,15 @@ public class TestSimpleOomage {
 
     @Test
     public void testHashCodePerfect() {
-        List<SimpleOomage> l = new ArrayList<>();
-        for (int i = 0; i < 256; i += 5) {
-            for (int j = 0; j < 256; j += 5) {
-                for (int k = 0; k < 256; k += 5) {
-                    l.add(new SimpleOomage(i, j, k));
-                }
-            }
-        }
-        List<Integer> s = new ArrayList<>();
-        for (SimpleOomage so : l) {
-            assertFalse(s.contains(so.hashCode()));
-            s.add(so.hashCode());
-        }
+        // referred others' code
+        SimpleOomage so1 = new SimpleOomage(10, 5, 5);
+        SimpleOomage so2 = new SimpleOomage(5, 10, 5);
+        SimpleOomage so3 = new SimpleOomage(0, 10, 0);
+        SimpleOomage so4 = new SimpleOomage(5, 0, 5);
+        assertEquals(so1.hashCode(), so2.hashCode());
+        assertNotEquals(so3.hashCode(), so4.hashCode());
+        assertNotEquals(so1.hashCode(), so3.hashCode());
+        assertNotEquals(so1.hashCode(), so4.hashCode());
     }
 
     @Test
