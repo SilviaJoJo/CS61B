@@ -2,8 +2,8 @@ package hw4.puzzle;
 import edu.princeton.cs.algs4.Queue;
 
 public class Board implements WorldState {
-    int[][] world;
-    int N;
+    private int[][] world;
+    private int N;
     private static final int BLANK = 0;
     public Board(int[][] tiles) {
         N = tiles.length;
@@ -70,17 +70,13 @@ public class Board implements WorldState {
     private int goalJ(int num) {
         return (num - 1) % N;
     }
-    private int goalNum(int i, int j) {
-        if (i == N - 1 && j == N - 1) {
-            return 0;
-        }
-        return N * i + j + 1;
-    }
     public int hamming() {
         int count = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (tileAt(i, j) != goalNum(i, j)) {
+                // by looking into the example in tutorial
+                // we can know that hamming doesn't count the blank block
+                if (tileAt(i, j) != 0 && tileAt(i, j) != N * i + j + 1) {
                     count++;
                 }
             }
@@ -124,14 +120,27 @@ public class Board implements WorldState {
         }
         return true;
     }
+    // one trick here is the hashCode function must be modified accordingly
+    // so even if it's not required by the tutorial
+    public int hashCode() {
+        int result = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                result *= 3;
+                result += tileAt(i, j);
+            }
+        }
+
+        return result;
+    }
     /** Returns the string representation of the board.
       * Uncomment this method. */
     public String toString() {
         StringBuilder s = new StringBuilder();
-        int N = size();
-        s.append(N + "\n");
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
+        int n = size();
+        s.append(n + "\n");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
                 s.append(String.format("%2d ", tileAt(i, j)));
             }
             s.append("\n");
