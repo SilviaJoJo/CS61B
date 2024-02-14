@@ -25,7 +25,6 @@ public class Solver {
     public Solver(WorldState initial) {
         states = new MinPQ<>();
         states.insert(new SearchNode(initial, 0, null));
-        solution = new ArrayDeque<>();
         // the key here is that we shouldn't modify the instance attributes
         // (moves and solutions) every time we try a path
         // we should only store the temp results in MinPQ
@@ -43,7 +42,15 @@ public class Solver {
                 }
             }
         }
-        solution();
+        solution = new ArrayDeque<>();
+        // from the final state we can trace back to its parents and ancestors
+        SearchNode curr = states.min();
+        while (curr != null) {
+            solution.addFirst(curr.state);
+            curr = curr.previous;
+        }
+        System.out.println(this.moves());
+        System.out.println(solution.size());
     }
 
     public int moves() {
@@ -54,12 +61,6 @@ public class Solver {
     }
 
     public Iterable<WorldState> solution() {
-        // from the final state we can trace back to its parents and ancestors
-        SearchNode curr = states.min();
-        while (curr != null) {
-            solution.addFirst(curr.state);
-            curr = curr.previous;
-        }
         return solution;
     }
 }

@@ -123,15 +123,15 @@ public class Board implements WorldState {
     // one trick here is the hashCode function must be modified accordingly
     // so even if it's not required by the tutorial
     public int hashCode() {
-        int result = 0;
+        int code = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                result *= 3;
-                result += tileAt(i, j);
+                code *= 3;
+                code += tileAt(i, j);
             }
         }
 
-        return result;
+        return code;
     }
     /** Returns the string representation of the board.
       * Uncomment this method. */
