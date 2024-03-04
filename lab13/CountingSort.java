@@ -1,5 +1,3 @@
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Class with 2 ways of doing Counting sort, one naive way and one "better" way
@@ -69,36 +67,37 @@ public class CountingSort {
      * @param arr int array that will be sorted
      */
     public static int[] betterCountingSort(int[] arr) {
-        // Step 1: retrieve all the items in arr and their corresponding counts
-        TreeMap<Integer, Integer> counts = new TreeMap<>();
-        for (int item : arr) {
-            if (counts.containsKey(item)) {
-                counts.put(item, counts.get(item) + 1);
-            } else {
-                counts.put(item, 1);
-            }
+        // Previously I used TreeMaps, but it cannot pass the runtime test
+        // So I can simply copy the implementation provided and make little modifications
+        // Step 1: find max and min
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        for (int i : arr) {
+            max = max > i ? max : i;
+            min = min < i ? min : i;
         }
-        // Step 2: get starting indexes
-        int[] items = new int[counts.size()];
-        int[] starts = new int[counts.size()];
-        int index = 0;
-        int position = 0;
-        for (Map.Entry<Integer, Integer> pair : counts.entrySet()) {
-            items[index] = pair.getKey();
-            starts[index] = position;
-            position += pair.getValue();
-            index++;
+
+        // Step 2: get counts for each value
+        int[] counts = new int[max - min + 1];
+        for (int i : arr) {
+            counts[i - min]++;
         }
-        // Step 3: sort the input
+
+        int[] starts = new int[max - min + 1];
+        int pos = 0;
+        for (int i = 0; i < starts.length; i += 1) {
+            starts[i] = pos;
+            pos += counts[i];
+        }
+
         int[] sorted = new int[arr.length];
-        for (int item : arr) {
-            for (int i = 0; i < counts.size(); i++) {
-                if (item == items[i]) {
-                    sorted[starts[i]] = item;
-                    starts[i]++;
-                }
-            }
+        for (int i = 0; i < arr.length; i += 1) {
+            int item = arr[i];
+            int place = starts[item - min];
+            sorted[place] = item;
+            starts[item - min]++;
         }
+
         return sorted;
     }
 }
