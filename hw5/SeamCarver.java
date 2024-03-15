@@ -43,10 +43,10 @@ public class SeamCarver {
                 myPicture.get(x, nextY(y)).getGreen(), myPicture.get(x, nextY(y)).getBlue()};
         int[] upperY = {myPicture.get(x, lastY(y)).getRed(),
                 myPicture.get(x, lastY(y)).getGreen(), myPicture.get(x, lastY(y)).getBlue()};
-        int deltaX = (rightX[0] - leftX[0]) * (rightX[0] - leftX[0]) + (rightX[1] - leftX[1]) *
-                (rightX[1] - leftX[1]) + (rightX[2] - leftX[2]) * (rightX[2] - leftX[2]);
-        int deltaY = (lowerY[0] - upperY[0]) * (lowerY[0] - upperY[0]) + (lowerY[1] - upperY[1]) *
-                (lowerY[1] - upperY[1]) + (lowerY[2] - upperY[2]) * (lowerY[2] - upperY[2]);
+        int deltaX = (rightX[0] - leftX[0]) * (rightX[0] - leftX[0]) + (rightX[1] - leftX[1])
+                * (rightX[1] - leftX[1]) + (rightX[2] - leftX[2]) * (rightX[2] - leftX[2]);
+        int deltaY = (lowerY[0] - upperY[0]) * (lowerY[0] - upperY[0]) + (lowerY[1] - upperY[1])
+                * (lowerY[1] - upperY[1]) + (lowerY[2] - upperY[2]) * (lowerY[2] - upperY[2]);
         return deltaX + deltaY;
     }           // energy of pixel at column x and row y
     public   int[] findHorizontalSeam() {
