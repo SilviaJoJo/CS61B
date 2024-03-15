@@ -10,7 +10,9 @@ public class SeamCarver {
         myPicture = new Picture(picture);
     }
     public Picture picture() {
-        return myPicture;
+        // cannot directly return the pointer
+        // otherwise our myPicture may be modified!
+        return new Picture(myPicture);
     }                      // current picture
     public     int width() {
         return width;
@@ -111,12 +113,18 @@ public class SeamCarver {
         if (seam.length != width) {
             throw new java.lang.IllegalArgumentException();
         }
-        myPicture = SeamRemover.removeHorizontalSeam(myPicture, seam);
+        myPicture = new Picture(SeamRemover.removeHorizontalSeam(myPicture, seam));
+        // seamRemover only modifies myPicture (and returns the modified version)
+        // we have to update width and height manually
+        width = myPicture.width();
+        height = myPicture.height();
     }  // remove horizontal seam from picture
     public    void removeVerticalSeam(int[] seam) {
         if (seam.length != width) {
             throw new java.lang.IllegalArgumentException();
         }
-        myPicture = SeamRemover.removeVerticalSeam(myPicture, seam);
+        myPicture = new Picture(SeamRemover.removeVerticalSeam(myPicture, seam));
+        width = myPicture.width();
+        height = myPicture.height();
     }    // remove vertical seam from picture
 }
