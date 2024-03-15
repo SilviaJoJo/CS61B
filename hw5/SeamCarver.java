@@ -120,7 +120,7 @@ public class SeamCarver {
         height = myPicture.height();
     }  // remove horizontal seam from picture
     public    void removeVerticalSeam(int[] seam) {
-        if (seam.length != width) {
+        if (seam.length != height) {
             throw new java.lang.IllegalArgumentException();
         }
         myPicture = new Picture(SeamRemover.removeVerticalSeam(myPicture, seam));
