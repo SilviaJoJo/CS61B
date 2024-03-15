@@ -3,6 +3,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.HashMap;
 import java.awt.Color;
+
 import huglife.Direction;
 import huglife.Action;
 import huglife.Occupant;
@@ -10,7 +11,7 @@ import huglife.Impassible;
 import huglife.Empty;
 
 /** Tests the plip class   
- *  @authr FIXME
+ *  @authr Josh Hug
  */
 
 public class TestPlip {
@@ -36,10 +37,14 @@ public class TestPlip {
 
     @Test
     public void testReplicate() {
-
+        Plip p = new Plip(1.2);
+        Plip child = p.replicate();
+        assertNotSame(p, child);
+        assertTrue(p.energy() == 0.6);
+        assertTrue(child.energy() == 0.6);
     }
 
-    //@Test
+    @Test
     public void testChoose() {
         Plip p = new Plip(1.2);
         HashMap<Direction, Occupant> surrounded = new HashMap<Direction, Occupant>();
@@ -56,6 +61,23 @@ public class TestPlip {
         Action expected = new Action(Action.ActionType.STAY);
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testChooseReplicate() {
+        Plip p1 = new Plip(1.2);
+        Plip p2 = new Plip(0.8);
+        HashMap<Direction, Occupant> surrounded = new HashMap<Direction, Occupant>();
+        surrounded.put(Direction.TOP, new Impassible());
+        surrounded.put(Direction.BOTTOM, new Impassible());
+        surrounded.put(Direction.LEFT, new Impassible());
+        surrounded.put(Direction.RIGHT, new Empty());
+        Action actual1 = p1.chooseAction(surrounded);
+        Action expected1 = new Action(Action.ActionType.REPLICATE, Direction.RIGHT);
+        assertEquals(expected1, actual1);
+        Action actual2 = p2.chooseAction(surrounded);
+        Action expected2 = new Action(Action.ActionType.STAY);
+        assertEquals(expected2, actual2);
     }
 
     public static void main(String[] args) {
