@@ -7,7 +7,7 @@ public class SeamCarver {
     public SeamCarver(Picture picture) {
         width = picture.width();
         height = picture.height();
-        myPicture = picture;
+        myPicture = new Picture(picture);
     }
     public Picture picture() {
         return myPicture;
