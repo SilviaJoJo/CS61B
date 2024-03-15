@@ -1,5 +1,4 @@
 import edu.princeton.cs.algs4.Picture;
-import edu.princeton.cs.algs4.Queue;
 
 public class SeamCarver {
     private int width;
@@ -62,47 +61,51 @@ public class SeamCarver {
         return ans;
     }           // sequence of indices for horizontal seam
 
+    /** My previous solution used Queue for iteration.
+     * It turned out to work fine, but timed out... */
     public   int[] findVerticalSeam() {
-        int[] ans = new int[height];
-        double minCost = Integer.MAX_VALUE;
-        double currCost = 0;
-        Queue<int[]> queue = new Queue<>();
+        // store e and M according to tutorial
+        int[][] e = new int[width][height];
+        int[][] M = new int[width][height];
         for (int i = 0; i < width; i++) {
-            int[] initialTrace = {i};
-            queue.enqueue(initialTrace);
-        }
-        while (!queue.isEmpty()) {
-            int[] currTrace = queue.dequeue();
-            if (currTrace.length < height) {
-                int lastPosition = currTrace[currTrace.length - 1];
-                if (lastPosition < width - 1) {
-                    int[] newTrace = new int[currTrace.length + 1];
-                    System.arraycopy(currTrace, 0, newTrace, 0, currTrace.length);
-                    newTrace[newTrace.length - 1] = lastPosition + 1;
-                    queue.enqueue(newTrace);
-                }
-                if (lastPosition > 0) {
-                    int[] newTrace = new int[currTrace.length + 1];
-                    System.arraycopy(currTrace, 0, newTrace, 0, currTrace.length);
-                    newTrace[newTrace.length - 1] = lastPosition - 1;
-                    queue.enqueue(newTrace);
-                }
-                int[] newTrace = new int[currTrace.length + 1];
-                System.arraycopy(currTrace, 0, newTrace, 0, currTrace.length);
-                newTrace[newTrace.length - 1] = lastPosition;
-                queue.enqueue(newTrace);
-            } else {
-                for (int i = 0; i < height; i++) {
-                    currCost += energy(currTrace[i], i);
-                }
-                if (currCost < minCost) {
-                    minCost = currCost;
-                    System.arraycopy(currTrace, 0, ans, 0, height);
-                }
-                currCost = 0;
+            for (int j = 0; j < height; j++) {
+                e[i][j] = (int) energy(i, j);
             }
         }
-        return ans;
+        for (int i = 0; i < width; i++) {
+            M[i][0] = e[i][0];
+        }
+        for (int j = 1; j < height; j++) {
+            for (int i = 0; i < this.width(); i++) {
+                M[i][j] = e[i][j] + M[i][j - 1];
+                if (i > 0 && e[i][j] + M[i - 1][j - 1] < M[i][j]) {
+                    M[i][j] = e[i][j] + M[i - 1][j - 1];
+                }
+                if (i < width - 1 && e[i][j] + M[i + 1][j - 1] < M[i][j]) {
+                    M[i][j] = e[i][j] + M[i + 1][j - 1];
+                }
+            }
+        }
+        // find the min cost and index
+        int[] seam = new int[height];
+        seam[height - 1] = 0;
+        for (int i = 0; i < width; i++) {
+            if (M[i][height - 1] < M[seam[height - 1]][height - 1]) {
+                seam[height - 1] = i;
+            }
+        }
+        // trace back
+        for (int j = this.height() - 2; j >= 0; j--) {
+            int i = seam[j + 1];
+            if (seam[j + 1] > 0 && M[seam[j + 1] - 1][j] < M[i][j]) {
+                i = seam[j + 1] - 1;
+            }
+            if (seam[j + 1] < width - 1 && M[seam[j + 1] + 1][j] < M[i][j]) {
+                i = seam[j + 1] + 1;
+            }
+            seam[j] = i;
+        }
+        return seam;
     }             // sequence of indices for vertical seam
     public    void removeHorizontalSeam(int[] seam) {
         if (seam.length != width) {
