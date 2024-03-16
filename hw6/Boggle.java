@@ -1,5 +1,8 @@
 import java.io.File;
-import java.util.*;
+import java.util.TreeSet;
+import java.util.Comparator;
+import java.util.List;
+import java.util.LinkedList;
 
 public class Boggle {
     
@@ -50,12 +53,15 @@ public class Boggle {
     }
 
     private static boolean isNeighbourAvailable(int i, int j, int[][] isVisited) {
-        return (i >= 0 && i < chars.length && j >= 0 && j < chars[0].length && isVisited[i][j] == 0);
+        if (i >= 0 && i < chars.length && j >= 0 && j < chars[0].length) {
+            return isVisited[i][j] == 0; // I am writing it in this way to avoid long lines of code.
+        }
+        return false;
     }
     /** @ Source: ZhiYuan Ma 2017
      * I think the most difficult part is to design the function signature
-     * since chars[][] and treeSet is used and modified by all calls, they should be class attributes
-     * to keep track of the current string, we can mimic tail recursion, passing it as an argument
+     * chars[][] and treeSet are used and modified by all calls -> class attributes
+     * to keep track of the current string -> passing it as an argument
      * after we are done with the current char, we should reset the isVisited back */
     private static void searchForString(String pre, int[][] isVisited, int i, int j) {
         pre += chars[i][j];
@@ -67,7 +73,8 @@ public class Boggle {
             int nextX = i + NEIGHBOURSX[index];
             int nextY = j + NEIGHBOURSY[index];
             // preCheck improves performance!
-            if (isNeighbourAvailable(nextX, nextY, isVisited) && trie.existsPrefix(pre + chars[nextX][nextY])) {
+            if (isNeighbourAvailable(nextX, nextY, isVisited)
+                    && trie.existsPrefix(pre + chars[nextX][nextY])) {
                 searchForString(pre, isVisited, nextX, nextY);
             }
         }
