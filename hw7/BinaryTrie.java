@@ -10,7 +10,8 @@ public class BinaryTrie implements Serializable {
         private final int freq;
         private final BinaryTrieNode left;
         private final BinaryTrieNode right;
-        public BinaryTrieNode(Character character, int freq, BinaryTrieNode left, BinaryTrieNode right) {
+        public BinaryTrieNode(Character character, int freq,
+                              BinaryTrieNode left, BinaryTrieNode right) {
             this.character = character;
             this.freq = freq;
             this.left = left;
